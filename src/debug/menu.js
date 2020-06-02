@@ -60,9 +60,9 @@ export default class Menu {
 	}
 
 
-	addPanel( panelDef ) {
+	addPanel( panelDef, system ) {
 		// Create the panel and options
-		var panel = new (panelDef.type)( panelDef.name, panelDef.label );
+		var panel = new (panelDef.type)( panelDef.name, panelDef.label, system );
 		if( panelDef.options ) {
 			for( var i = 0; i < panelDef.options.length; i++ ) {
 				var opt = panelDef.options[i];
@@ -162,6 +162,8 @@ export default class Menu {
 
 		this.showNumber( 'ms',  this.debugTime.toFixed(2) );
 		this.showNumber( 'fps',  Math.round(1000/this.debugTickAvg) );
+		this.showNumber( 'render index', window.renderIndex);
+		this.showNumber( 'simulate index', window.simulateIndex);
 		if( renderer ) {
 			this.showNumber( 'draws', renderer.drawCount );
 		}

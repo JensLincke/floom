@@ -1,6 +1,7 @@
 import Vector2 from "../external/vector2.js";
 import { Matrix } from "ml-matrix";
 import Node from "./node.js";
+import Material from "./material.js"
 
 	var defaultNode = new Node();
 
@@ -36,6 +37,43 @@ import Node from "./node.js";
 	    this.affineMomentum = Matrix.zeros(2,2);
 	    this.deformationGradient = Matrix.eye(2,2);
 
+	};
+
+	// snapshotting logic:
+	Particle.prototype.toJSON = function() {
+		let settings = {
+			position: Object.assign({}, this.position),
+			// prevPosition: this.prevPosition,
+			velocity: Object.assign({}, this.velocity),
+			// gridVelocity: this.gridVelocity,
+			material: this.material,
+
+			// cellX: this.cellX,
+			// cellY: this.cellY,
+
+			// px: this.px,
+			// py: this.py,
+			// gx: this.gx,
+			// gy: this.gy,
+			//
+			// s: this.s,
+			// sx: this.sx,
+			// sy: this.sy,
+			//
+			// node: this.node,
+			//
+			// T00: this.T00,
+			// T01: this.T01,
+			// T11: this.T11
+		};
+		return Object.assign({}, settings)
+	};
+
+	Particle.fromJSON = function(settings) {
+		let parsedSettings = settings;
+		let particle = new Particle(parsedSettings.position.x, parsedSettings.position.y, parsedSettings.velocity.x, parsedSettings.velocity.y, parsedSettings.material);
+		// TODO check if any other property has to be set to be functional
+		return particle;
 	};
 
 	export default Particle;
