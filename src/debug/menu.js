@@ -1,4 +1,5 @@
 import DebugOption from "./option.js";
+import $ from "jquery";
 
 export default class Menu {
 

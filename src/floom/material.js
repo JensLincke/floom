@@ -1,3 +1,5 @@
+import d3 from "../external/d3.js";
+
 export default class Material {
 	constructor(materialIndex) {
 		this.colorScale = d3.scale.linear()

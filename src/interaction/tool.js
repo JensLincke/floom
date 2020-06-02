@@ -1,4 +1,4 @@
-import Vector2 from "./../external/vector2.js";
+import Vector2 from "../external/vector2.js";
 
 class ToolEvent {
 	constructor(tool) {
@@ -88,7 +88,7 @@ class ToolEvent {
 	getDownPath() {}
 	getDownPathInWorld(viewport) {}
 }
-	
+
 export default class Tool {
 	constructor(input) {
 		this.input = input;

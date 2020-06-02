@@ -1,3 +1,4 @@
+import $ from "jquery";
 import Material from "./material.js";
 import Particle from "./particle.js";
 import Group from "./group.js";

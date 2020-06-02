@@ -1,6 +1,7 @@
 import Node from "./node.js";
-import Vector2 from "./../external/vector2.js";
-import AABB from "./../external/aabb.js";
+import Vector2 from "../external/vector2.js";
+import AABB from "../external/aabb.js";
+import _ from "underscore";
 
 	var Grid = function(){
 		this.arr = [];
@@ -33,19 +34,19 @@ import AABB from "./../external/aabb.js";
 	Grid.prototype.getAt = function(cellX, cellY) {
 		return this.arr[cellX * this.gsizeY + cellY];
 	};
-	
+
 	Grid.prototype.getOrCreateAt = function(cellX, cellY) {
 		var cell = cellX * this.gsizeY + cellY;
 		var node = this.arr[cell];
-		
+
 		if(node === undefined) {
 			this.arr[cell] = node = new Node();
 			this.activeCount++;
 		}
-		
+
 		return node;
 	};
-	
+
 	Grid.prototype.recalculateBoundaries = function(system) {
 	    // expand boundaries to include all particles
 	    this.boundaries.clear();
@@ -59,9 +60,9 @@ import AABB from "./../external/aabb.js";
 		this.boundaries.Max.x = Math.floor(this.boundaries.Max.x+3);
 		this.boundaries.Max.y = Math.floor(this.boundaries.Max.y+3);
 	};
-	
+
 	Grid.prototype.recalculateSizeY = function() {
 		this.gsizeY = Math.floor(this.boundaries.Max.y-this.boundaries.Min.y);
 	};
-	
+
 	export default Grid;

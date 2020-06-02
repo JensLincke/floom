@@ -5,7 +5,8 @@ import Node from "./node.js";
 import Grid from "./grid.js";
 import Obstacle from "./obstacle.js";
 import Integrator from "./integrator.js";
-import Vector2 from "./../external/vector2.js";
+import _ from "underscore";
+import Vector2 from "../external/vector2.js";
 
 	/*
 	 * Early simple implementation of the material point method
@@ -24,13 +25,13 @@ import Vector2 from "./../external/vector2.js";
 		_.each(this.particles, function(p, pIndex) {
 			this.integrator.updateStateAndGradientOf(p);
 			this.integrator.prepareParticle(p);
-			
+
 			this.integrator.integrate(p, function(particle, node, phi, gxpy, pxgy) {
 				node.mass += phi;
 			});
 		}, this);
 	};
-	
+
 	System.prototype.__sumParticleDensityFromGridAndAddPressureansElasticForcesToGrid = function() {
 		// Sum particle density from grid, and add pressure and elastic forces to grid
 		_.each(this.particles, function(p, pIndex) {
@@ -61,7 +62,7 @@ import Vector2 from "./../external/vector2.js";
 				f.y += this.wall.Max.y - p.position.y;
 	            p.velocity.y *= 0.1;
 			}
-			
+
 			this.integrator.integrate(p, function(particle, node, phi, gxpy, pxgy) {
 				node.acceleration.x += -(gxpy * pressure) + f.x * phi;
 				node.acceleration.y += -(pxgy * pressure) + f.y * phi;
@@ -78,7 +79,7 @@ import Vector2 from "./../external/vector2.js";
 			}
 		}, this);
 	};
-	
+
 	// accelerate particles and interpolate velocity back to grid
 	System.prototype.__accelerateParticlesAndInterpolateVelocityBackToGrid = function() {
 		_.each(this.particles, function(p, pIndex) {
@@ -90,7 +91,7 @@ import Vector2 from "./../external/vector2.js";
 			});
 		}, this);
 	};
-	
+
 	// divide grid velocity by mass
 	System.prototype.__divideGridVelocityByMass = function() {
 		this.grid.iterate(function(n) {
@@ -99,7 +100,7 @@ import Vector2 from "./../external/vector2.js";
 			}
 		}, this);
 	};
-	
+
 	System.prototype.__advanceParticles = function() {
 		// advance particles
 		_.each(this.particles, function(p, pIndex) {

@@ -1,4 +1,8 @@
 import Floom, { Input, Viewport, CombinedRenderer, Vector2, Debug, Tool } from "./index.js";
+import _ from "underscore";
+import $ from "jquery";
+import * as dat from 'dat.gui';
+import Stats from 'stats-js';
 
 	var debug;
 
@@ -33,7 +37,7 @@ import Floom, { Input, Viewport, CombinedRenderer, Vector2, Debug, Tool } from "
 			});
 		});
 		repelTool.name = "repel";
-		
+
 		function getRandomPointInCircleUniformly() {
 			var TWO_PI = (3.14159265 * 2.0);
 			var t = TWO_PI*Math.random();
@@ -62,7 +66,7 @@ import Floom, { Input, Viewport, CombinedRenderer, Vector2, Debug, Tool } from "
             spawnMaterialIndex = (spawnMaterialIndex + 1) % system.materials.length;
         });
 		spawnTool.name = "spawn";
-		
+
 		var consumeTool = new Tool(input);
 		consumeTool.onMouseDrag(function(event) {
 			for(var i = 0; i < system.getNumberOfParticles();) {
@@ -87,7 +91,7 @@ import Floom, { Input, Viewport, CombinedRenderer, Vector2, Debug, Tool } from "
 				console.log("its " + key);
 				tool.activate();
 			};
-			
+
 			_.each(map, function(fromTool) {
 				fromTool.onKeyUp(key, toTool);
 			});
@@ -102,7 +106,7 @@ import Floom, { Input, Viewport, CombinedRenderer, Vector2, Debug, Tool } from "
 
 		// draw mouse cursor
 		renderer.drawDot(input.mouse, 10, color, 0.5);
-		
+
 		// draw current interaction name
 		renderer.drawText(
 			input.tool.name,
@@ -122,9 +126,9 @@ import Floom, { Input, Viewport, CombinedRenderer, Vector2, Debug, Tool } from "
         gravityFolder.add(system.gravity, "x").min(-0.2).max(0.2).step(-0.01);
         gravityFolder.add(system.gravity, "y").min(-0.2).max(0.2).step(-0.01);
 
-		datGui.add(system, "implementationType", { 
-			"Surface Tension": "surfaceTension", 
-			"Simple Implementation": "simple", 
+		datGui.add(system, "implementationType", {
+			"Surface Tension": "surfaceTension",
+			"Simple Implementation": "simple",
 			"MLS Implementation": "mls" }).name('Implementation Type');
 		datGui.add(system, "drawGrid").name('Draw Grid');
 		datGui.add(system, "doObstacles").name('Obstacles');
@@ -142,11 +146,11 @@ import Floom, { Input, Viewport, CombinedRenderer, Vector2, Debug, Tool } from "
 			datGuiForMaterial(material, materialFolder);
 		});
 	}
-	
+
 	function datGuiForMaterial(material, parent) {
 		var folder = parent.addFolder("Mat" + material.materialIndex);
 		folder.open();
-		
+
 		folder.addColor(material, "color").onChange(material.setColor.bind(material));
 		folder.add(material, "particleMass").min(0.01).max(5.0).step(0.1);
 		folder.add(material, "restDensity").min(0.1).max(5.0).step(0.1);
@@ -178,7 +182,7 @@ import Floom, { Input, Viewport, CombinedRenderer, Vector2, Debug, Tool } from "
 	$(window).scroll(function() {
 		$(stats.domElement).css('top', $(this).scrollTop() + "px");
 	});
-	
+
 	// prepare input
 	var input = new Input(canvasId);
 	input.initMouse();
@@ -241,7 +245,7 @@ import Floom, { Input, Viewport, CombinedRenderer, Vector2, Debug, Tool } from "
 	);
 	viewport.jumpToPoint(new Vector2(0, 35));
 	initTools(input, viewport, fluidSystem);
-	
+
 	// update routine
 	var lastPoint = Vector2.Zero.copy();
 	function update(timePassed) {
@@ -264,7 +268,7 @@ import Floom, { Input, Viewport, CombinedRenderer, Vector2, Debug, Tool } from "
 		if(input.state("zoomOut")) {
 			viewport.zoomOut();
 		}
-		
+
 		fluidSystem.update(timePassed);
 		if(graph)
 			graph.endClock('update');
@@ -283,7 +287,7 @@ import Floom, { Input, Viewport, CombinedRenderer, Vector2, Debug, Tool } from "
 		input.clearPressed();
 	}
 
-	
+
 	// main loop
 	var lastFrame = window.performance.now();
 	function animate() {

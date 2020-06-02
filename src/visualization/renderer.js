@@ -1,4 +1,6 @@
-import Vector2 from "./../external/vector2.js";
+import Vector2 from "../external/vector2.js";
+import d3 from "../external/d3.js";
+
 
 class Configuration {
 
@@ -35,7 +37,7 @@ class Configuration {
 	}
 
 }
-	
+
 export default class Renderer {
 
 	/*

@@ -1,5 +1,6 @@
 import Menu from './menu.js';
 import DebugPanel from './panel.js';
+import $ from "jquery";
 
 var round = function(number, precision) {
 	precision = Math.pow(10, precision || 0);
